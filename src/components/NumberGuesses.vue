@@ -8,7 +8,12 @@ const props = defineProps({
 
 const codeLength = 4
 const attempts: any = ref([])
-const newAttempt: any = ref([10, 10, 10, 10])
+const newAttempt: any = ref([])
+
+let i: number
+for (i = 0; i < codeLength; i++) {
+  newAttempt.value[i] = 10
+}
 
 let curCol: number = 0
 
@@ -56,7 +61,7 @@ const pickColor = function (i: number) {
   </div>
 
   <div class="flex mx-auto w-96 justify-between mb-10 border-gray-400 border-2 rounded-full px-10 py-2">
-    <span v-for="i in 4" :key="i"
+    <span v-for="i in codeLength" :key="i"
           :class="'g-' + newAttempt[i-1]"
           class="w-10 h-10 flex items-center justify-around font-bold">
       <span v-if="showNumbers && newAttempt[i-1] < 10">{{ newAttempt[i - 1] }}</span>
@@ -72,15 +77,28 @@ const pickColor = function (i: number) {
         <span v-if="showNumbers">{{ n }}</span>
       </div>
     </div>
-    <div class="flex flex-col items-end text-right">
-      <div class="flex">
+    <div class="flex items-end text-right">
+      <div class="flex flex-col">
         <div :class="'r-' + a.result[0]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
         <div :class="'r-' + a.result[1]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
       </div>
 
-      <div class="flex">
+      <div class="flex flex-col">
         <div :class="'r-' + a.result[2]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
         <div :class="'r-' + a.result[3]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
+      </div>
+    </div>
+    <div v-if="a.result.length > 4"
+         class="flex items-end text-right">
+      <div class="flex flex-col">
+        <div :class="'r-' + a.result[4]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
+        <div :class="'r-' + a.result[5]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
+      </div>
+
+      <div v-if="a.result.length > 6"
+           class="flex flex-col">
+        <div :class="'r-' + a.result[6]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
+        <div :class="'r-' + a.result[7]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
       </div>
     </div>
   </div>
