@@ -3,20 +3,19 @@ import {createRouter, createWebHistory} from "vue-router";
 import App from './App.vue'
 import './index.css'
 
-import NumberGuesses from "./components/NumberGuesses.vue"
-import ColorGuesses from "./components/ColorGuesses.vue"
+import GuessScreen from "./components/GuessScreen.vue"
 
 const routes = [
     {
         path: '/colors',
         name: 'ColorGuesses',
-        component: NumberGuesses,
+        component: GuessScreen,
         props: { showNumbers: false }
     },
     {
         path: '/numbers',
         name: 'NumberGuesses',
-        component: NumberGuesses,
+        component: GuessScreen,
         props: { showNumbers: true }
     },
 ]
