@@ -1,27 +1,26 @@
 import { createApp } from 'vue'
-import {createRouter, createWebHistory} from "vue-router";
+import {createRouter, createWebHashHistory} from "vue-router";
 import App from './App.vue'
 import './index.css'
 
+import StartScreen from "./components/StartScreen.vue"
 import GuessScreen from "./components/GuessScreen.vue"
 
 const routes = [
     {
-        path: '/colors',
-        name: 'ColorGuesses',
-        component: GuessScreen,
-        props: { showNumbers: false }
+        path: '/',
+        name: 'StartScreen',
+        component: StartScreen,
     },
     {
-        path: '/numbers',
-        name: 'NumberGuesses',
+        path: '/play',
+        name: 'GuessScreen',
         component: GuessScreen,
-        props: { showNumbers: true }
     },
 ]
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHashHistory(),
     routes,
 })
 
