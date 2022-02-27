@@ -2,10 +2,7 @@
 import {ref} from "vue";
 import axios from "axios"
 
-const props = defineProps({
-  showNumbers: Boolean
-})
-
+let showNumbers: any = ref(false)
 const codeLength = 4
 const attempts: any = ref([])
 const newAttempt: any = ref([])
@@ -18,16 +15,18 @@ for (i = 0; i < codeLength; i++) {
 let curCol: number = 0
 
 const checkAttempt = function () {
-  const instance = axios.create({
-    baseURL: "http://localhost:8080",
-    timeout: 1000,
-  })
+  for (i = 0; i < codeLength; i++) {
+    if (newAttempt.value[i] == 10) {
+      return
+    }
+  }
+
 
   const data = {
     Attempt: newAttempt.value
   }
 
-  instance.post('/chk', data).then(result => {
+  axios.post('/chk', data).then(result => {
     attempts.value.unshift(result.data)
 
     let i: number
@@ -47,58 +46,73 @@ const pickColor = function (i: number) {
     curCol = 0
   }
 }
+
+const toggleNumbers = function () {
+  showNumbers.value = !showNumbers.value
+}
 </script>
 
 <template>
-  <h1 class="text-3xl font-bold mx-auto mb-10">Madder Mind</h1>
-
-  <div class="flex mx-auto justify-between items-center mb-10 cursor-pointer" style="width:32rem;">
+    <span
+        class="mt-20 mb-10 w-10 h-10 mx-auto m-2 cursor-pointer text-center flex items-center justify-around font-bold rounded-full"
+        style="background-color: #5b2226; color: #fafafa"
+        @click="toggleNumbers()">
+    </span>
+  <div class="flex max-w-screen-sm mx-auto justify-around items-center mb-10">
     <span v-for="i in 10" :key="i"
           :class="'g-' + (i-1)"
-          class="w-10 h-10 text-center flex items-center justify-around font-bold"
+          class="w-10 h-10 text-center flex items-center justify-around font-bold cursor-pointer"
           @click="pickColor(i-1)"
-    ><span v-if="showNumbers">{{ i - 1 }}</span></span>
-  </div>
-
-  <div class="flex mx-auto w-96 justify-between mb-10 border-gray-400 border-2 rounded-full px-10 py-2">
-    <span v-for="i in codeLength" :key="i"
-          :class="'g-' + newAttempt[i-1]"
-          class="w-10 h-10 flex items-center justify-around font-bold">
-      <span v-if="showNumbers && newAttempt[i-1] < 10">{{ newAttempt[i - 1] }}</span>
+    >
+      <span v-if="showNumbers">{{ i - 1 }}</span>
     </span>
-    <button class="bg-green-600 w-10 h-10 border-1 border-gray-400 px-3 rounded-full" @click="checkAttempt"></button>
   </div>
 
-  <div v-for="a in attempts" class="flex w-72 h-20 mx-auto items-center justify-between items-center">
-    <div class="flex w-full justify-between mr-5">
+  <div
+      class="flex mx-auto max-w-xl justify-between items-center mb-10 border-gray-400 border-2 rounded-full py-2">
+    <div class="flex mx-auto justify-between">
+      <span v-for="i in codeLength" :key="i"
+            :class="'g-' + newAttempt[i-1]"
+            class="w-10 h-10 flex items-center justify-around font-bold mx-2">
+        <span v-if="showNumbers && newAttempt[i-1] < 10">{{ newAttempt[i - 1] }}</span>
+      </span>
+      <button
+          class="w-10 h-10 flex items-center justify-around font-bold mx-2 bg-green-600 text-white rounded-full"
+          @click="checkAttempt">
+      </button>
+    </div>
+  </div>
+
+  <div v-for="a in attempts" class="flex mx-auto max-w-xl justify-between items-center mb-5">
+    <div class="flex mx-auto justify-between">
       <div v-for="n in a.attempt"
            :class="'g-' + n"
-           class="flex justify-center items-center w-10 h-10 font-bold">
+           class="w-10 h-10 flex items-center justify-around font-bold mx-2">
         <span v-if="showNumbers">{{ n }}</span>
       </div>
-    </div>
-    <div class="flex items-end text-right">
-      <div class="flex flex-col">
-        <div :class="'r-' + a.result[0]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
-        <div :class="'r-' + a.result[1]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
-      </div>
+      <div class="flex items-end text-right mx-2">
+        <div class="flex flex-col">
+          <div :class="'r-' + a.result[0]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
+          <div :class="'r-' + a.result[1]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
+        </div>
 
-      <div class="flex flex-col">
-        <div :class="'r-' + a.result[2]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
-        <div :class="'r-' + a.result[3]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
+        <div class="flex flex-col">
+          <div :class="'r-' + a.result[2]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
+          <div :class="'r-' + a.result[3]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
+        </div>
       </div>
-    </div>
-    <div v-if="a.result.length > 4"
-         class="flex items-end text-right">
-      <div class="flex flex-col">
-        <div :class="'r-' + a.result[4]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
-        <div :class="'r-' + a.result[5]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
-      </div>
+      <div v-if="a.result.length > 4"
+           class="flex items-end text-right">
+        <div class="flex flex-col">
+          <div :class="'r-' + a.result[4]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
+          <div :class="'r-' + a.result[5]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
+        </div>
 
-      <div v-if="a.result.length > 6"
-           class="flex flex-col">
-        <div :class="'r-' + a.result[6]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
-        <div :class="'r-' + a.result[7]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
+        <div v-if="a.result.length > 6"
+             class="flex flex-col">
+          <div :class="'r-' + a.result[6]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
+          <div :class="'r-' + a.result[7]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
+        </div>
       </div>
     </div>
   </div>
@@ -166,6 +180,6 @@ const pickColor = function (i: number) {
 }
 
 .r-0 {
-  background-color: #94d2bd;
+  background-color: #d5d2ca;
 }
 </style>
