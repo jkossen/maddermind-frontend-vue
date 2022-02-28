@@ -3,7 +3,7 @@ import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
 const router = useRouter()
-const nrAttempts = route.params.nrAttempts
+const nrAttempts: any = route.params.nrAttempts
 </script>
 
 <template>

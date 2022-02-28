@@ -49,7 +49,12 @@ const checkAttempt = function () {
     }
 
     if (score === codeLength * 2) {
-      router.push({name: 'LevelCompleted', params: {level: route.params.level, nrAttempts: attempts.length}})
+      router.push({
+        name: 'LevelCompleted', params: {
+          'level': route.params.level,
+          'nrAttempts': attempts.value.length
+        }
+      })
     }
 
     let i: number
