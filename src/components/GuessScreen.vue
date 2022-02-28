@@ -1,11 +1,26 @@
 <script lang="ts" setup>
 import {ref} from "vue";
 import axios from "axios"
+import {useRoute, useRouter} from 'vue-router'
 
+const router = useRouter()
+const route = useRoute()
+
+let codeLength = 4
 let showNumbers: any = ref(false)
-const codeLength = 4
 const attempts: any = ref([])
 const newAttempt: any = ref([])
+
+switch (route.params.level) {
+  case '2':
+    codeLength = 6
+    break
+  case '3':
+    codeLength = 8
+    break
+  default:
+    codeLength = 4
+}
 
 let i: number
 for (i = 0; i < codeLength; i++) {
@@ -21,13 +36,21 @@ const checkAttempt = function () {
     }
   }
 
-
   const data = {
     Attempt: newAttempt.value
   }
 
   axios.post('/chk', data).then(result => {
     attempts.value.unshift(result.data)
+
+    let score: number = 0
+    for (let r of result.data.result) {
+      score += parseInt(r)
+    }
+
+    if (score === codeLength * 2) {
+      router.push({name: 'LevelCompleted', params: {level: route.params.level, nrAttempts: attempts.length}})
+    }
 
     let i: number
     for (i = 0; i < newAttempt.value.length; i++) {

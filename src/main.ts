@@ -6,6 +6,7 @@ import axios from "axios";
 
 import StartScreen from "./components/StartScreen.vue"
 import GuessScreen from "./components/GuessScreen.vue"
+import LevelCompletedScreen from "./components/LevelCompletedScreen.vue"
 
 // @ts-ignore
 axios.defaults.baseURL = import.meta.env.VITE_API_BASEURL || 'http://localhost:12001/'
@@ -18,9 +19,14 @@ const routes = [
         component: StartScreen,
     },
     {
-        path: '/play',
+        path: '/play/:level',
         name: 'GuessScreen',
         component: GuessScreen,
+    },
+    {
+        path: '/completed/:level/:nrAttempts',
+        name: 'LevelCompleted',
+        component: LevelCompletedScreen
     },
 ]
 
