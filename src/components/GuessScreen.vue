@@ -96,9 +96,9 @@ const toggleNumbers = function () {
   </div>
 
   <div
-      class="flex mx-auto max-w-xl justify-between items-center mb-10 border-gray-400 border-2 rounded-full py-2">
+      class="flex mx-auto max-w-xl justify-between items-center mb-10 border-gray-400 border-2 rounded-lg py-2">
     <div class="flex mx-auto justify-between">
-      <div v-for="i in codeLength" :key="i" class="w-10 h-15 flex flex-col mx-2">
+      <div v-for="i in codeLength" :key="i" class="w-10 h-15 flex flex-col sm:mx-2">
         <span
             :class="'g-' + newAttempt[i-1]"
             class="w-10 h-10 flex items-center justify-around font-bold">
