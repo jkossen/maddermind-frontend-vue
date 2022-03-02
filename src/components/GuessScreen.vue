@@ -117,7 +117,7 @@ const toggleNumbers = function () {
       </div>
 
       <div class="w-20 h-10 flex justify-center"
-           :class="['g-' + n, (codeLength > 4) ? 'sm:ml-2' : 'ml-2']">
+           :class="(codeLength > 4) ? 'sm:ml-2' : 'ml-2'">
         <button
             class="w-10 h-10 flex items-center justify-around font-bold bg-green-600 text-white rounded-full"
 
@@ -140,7 +140,7 @@ const toggleNumbers = function () {
            :class="(codeLength > 4) ? 'sm:ml-2' : 'ml-2'"
       >
         <div class="flex items-end text-right"
-             :class="['g-' + n, (codeLength > 4) ? 'sm:mx-2' : 'mx-2']"
+             :class="(codeLength > 4) ? 'sm:mx-2' : 'mx-2'"
         >
           <div class="flex flex-col">
             <div :class="'r-' + a.result[0]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
