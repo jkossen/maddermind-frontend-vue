@@ -10,6 +10,7 @@ let codeLength = 4
 let showNumbers: any = ref(false)
 const attempts: any = ref([])
 const newAttempt: any = ref([])
+const curCol: any = ref(0)
 
 switch (route.params.level) {
   case '2':
@@ -26,8 +27,6 @@ let i: number
 for (i = 0; i < codeLength; i++) {
   newAttempt.value[i] = 10
 }
-
-let curCol: number = 0
 
 const checkAttempt = function () {
   for (i = 0; i < codeLength; i++) {
@@ -61,17 +60,17 @@ const checkAttempt = function () {
     for (i = 0; i < newAttempt.value.length; i++) {
       newAttempt.value[i] = 10
     }
-    curCol = 0
+    curCol.value = 0
   })
 }
 
 const pickColor = function (i: number) {
-  newAttempt.value[curCol] = i
+  newAttempt.value[curCol.value] = i
 
-  if (curCol < codeLength - 1) {
-    curCol++
+  if (curCol.value < codeLength - 1) {
+    curCol.value++
   } else {
-    curCol = 0
+    curCol.value = 0
   }
 }
 
@@ -99,11 +98,22 @@ const toggleNumbers = function () {
   <div
       class="flex mx-auto max-w-xl justify-between items-center mb-10 border-gray-400 border-2 rounded-full py-2">
     <div class="flex mx-auto justify-between">
-      <span v-for="i in codeLength" :key="i"
+      <div v-for="i in codeLength" :key="i" class="w-10 h-15 flex flex-col mx-2">
+        <span
             :class="'g-' + newAttempt[i-1]"
-            class="w-10 h-10 flex items-center justify-around font-bold mx-2">
-        <span v-if="showNumbers && newAttempt[i-1] < 10">{{ newAttempt[i - 1] }}</span>
-      </span>
+            class="w-10 h-10 flex items-center justify-around font-bold">
+          <span
+              v-if="showNumbers && newAttempt[i-1] < 10">{{ newAttempt[i - 1] }}
+          </span>
+        </span>
+        <span
+            v-if="curCol == i - 1"
+            class="w-10 h-2 mt-2"
+            style="background-color: #ee9b00;"
+        >
+        </span>
+      </div>
+
       <button
           class="w-10 h-10 flex items-center justify-around font-bold mx-2 bg-green-600 text-white rounded-full"
           @click="checkAttempt">
