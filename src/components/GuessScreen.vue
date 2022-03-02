@@ -96,14 +96,14 @@ const toggleNumbers = function () {
   </div>
 
   <div
-      class="flex mx-auto max-w-xl justify-between items-center mb-10 border-gray-400 border-2 rounded-lg py-2">
-    <div class="flex mx-auto justify-between">
+      class="flex max-w-screen-sm mx-auto justify-around items-center mb-10 py-2">
+    <div class="flex w-full mx-auto sm:justify-center justify-between">
       <div v-for="i in codeLength" :key="i" class="w-10 h-15 flex flex-col"
-      :class="(codeLength > 6) ? 'sm:mx-2' : ''"
+           :class="(codeLength > 4) ? 'sm:mx-2' : 'mx-2'"
       >
         <span
             :class="'g-' + newAttempt[i-1]"
-            class="w-10 h-10 flex items-center justify-around font-bold">
+            class="w-10 h-10 flex items-center justify-center font-bold">
           <span
               v-if="showNumbers && newAttempt[i-1] < 10">{{ newAttempt[i - 1] }}
           </span>
@@ -116,42 +116,54 @@ const toggleNumbers = function () {
         </span>
       </div>
 
-      <button
-          class="w-10 h-10 flex items-center justify-around font-bold mx-2 bg-green-600 text-white rounded-full"
-          @click="checkAttempt">
-      </button>
+      <div class="w-20 h-10 flex justify-center"
+           :class="['g-' + n, (codeLength > 4) ? 'sm:ml-2' : 'ml-2']">
+        <button
+            class="w-10 h-10 flex items-center justify-around font-bold bg-green-600 text-white rounded-full"
+
+            @click="checkAttempt">
+        </button>
+      </div>
     </div>
   </div>
 
-  <div v-for="a in attempts" class="flex mx-auto max-w-xl justify-between items-center mb-5">
-    <div class="flex mx-auto justify-between">
+  <div v-for="a in attempts" class="flex max-w-screen-sm mx-auto justify-around items-center mb-5">
+    <div class="flex w-full mx-auto sm:justify-center justify-between"
+
+    >
       <div v-for="n in a.attempt"
-           :class="'g-' + n"
-           class="w-10 h-10 flex items-center justify-around font-bold mx-2">
+           :class="['g-' + n, (codeLength > 4) ? 'sm:mx-2' : 'mx-2']"
+           class="w-10 h-10 flex items-center justify-center font-bold">
         <span v-if="showNumbers">{{ n }}</span>
       </div>
-      <div class="flex items-end text-right mx-2">
-        <div class="flex flex-col">
-          <div :class="'r-' + a.result[0]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
-          <div :class="'r-' + a.result[1]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
-        </div>
+      <div class="w-20 h-10 flex justify-center"
+           :class="(codeLength > 4) ? 'sm:ml-2' : 'ml-2'"
+      >
+        <div class="flex items-end text-right"
+             :class="['g-' + n, (codeLength > 4) ? 'sm:mx-2' : 'mx-2']"
+        >
+          <div class="flex flex-col">
+            <div :class="'r-' + a.result[0]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
+            <div :class="'r-' + a.result[1]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
+          </div>
 
-        <div class="flex flex-col">
-          <div :class="'r-' + a.result[2]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
-          <div :class="'r-' + a.result[3]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
+          <div class="flex flex-col">
+            <div :class="'r-' + a.result[2]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
+            <div :class="'r-' + a.result[3]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
+          </div>
         </div>
-      </div>
-      <div v-if="a.result.length > 4"
-           class="flex items-end text-right">
-        <div class="flex flex-col">
-          <div :class="'r-' + a.result[4]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
-          <div :class="'r-' + a.result[5]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
-        </div>
+        <div v-if="a.result.length > 4"
+             class="flex items-end text-right">
+          <div class="flex flex-col">
+            <div :class="'r-' + a.result[4]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
+            <div :class="'r-' + a.result[5]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
+          </div>
 
-        <div v-if="a.result.length > 6"
-             class="flex flex-col">
-          <div :class="'r-' + a.result[6]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
-          <div :class="'r-' + a.result[7]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
+          <div v-if="a.result.length > 6"
+               class="flex flex-col">
+            <div :class="'r-' + a.result[6]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
+            <div :class="'r-' + a.result[7]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
+          </div>
         </div>
       </div>
     </div>
