@@ -1,3 +1,5 @@
+dist.tar.gz
+.env.production
 
 # Created by https://www.toptal.com/developers/gitignore/api/vue,vuejs,windows,macos,linux,webstorm,phpstorm
 # Edit at https://www.toptal.com/developers/gitignore?templates=vue,vuejs,windows,macos,linux,webstorm,phpstorm
