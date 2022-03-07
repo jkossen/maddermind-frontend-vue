@@ -1,7 +1,9 @@
 <script lang="ts" setup>
-import {ref} from "vue";
+import {ref} from "vue"
 import axios from "axios"
 import {useRoute, useRouter} from 'vue-router'
+import NumberSquare from "./NumberSquare.vue";
+import ResultLine from "./ResultLine.vue";
 
 const router = useRouter()
 const route = useRoute()
@@ -36,7 +38,7 @@ const checkAttempt = function () {
   }
 
   const data = {
-    Attempt: newAttempt.value
+    attempt: newAttempt.value
   }
 
   axios.post('/chk', data).then(result => {
@@ -86,13 +88,15 @@ const toggleNumbers = function () {
         @click="toggleNumbers()">
     </span>
   <div class="flex max-w-screen-sm mx-auto justify-around items-center mb-10">
-    <span v-for="i in 10" :key="i"
-          :class="'g-' + (i-1)"
-          class="w-10 h-10 text-center flex items-center justify-around font-bold cursor-pointer"
-          @click="pickColor(i-1)"
-    >
-      <span v-if="showNumbers">{{ i - 1 }}</span>
-    </span>
+    <NumberSquare
+        v-for="i in 10"
+        :key="i-1"
+        :num="i-1"
+        :codeLength="codeLength"
+        :class="'g-' + (i-1)"
+        :showNumbers="showNumbers"
+        @click="pickColor(i-1)"
+    />
   </div>
 
   <div
@@ -101,15 +105,15 @@ const toggleNumbers = function () {
       <div v-for="i in codeLength" :key="i" class="w-10 h-15 flex flex-col"
            :class="(codeLength > 4) ? 'sm:mx-2' : 'mx-2'"
       >
-        <span
+        <NumberSquare
+            :num="newAttempt[i-1]"
+            :codeLength="codeLength"
             :class="'g-' + newAttempt[i-1]"
-            class="w-10 h-10 flex items-center justify-center font-bold">
-          <span
-              v-if="showNumbers && newAttempt[i-1] < 10">{{ newAttempt[i - 1] }}
-          </span>
-        </span>
+            :showNumbers="showNumbers"
+        />
+
         <span
-            v-if="curCol == i - 1"
+            v-if="curCol == i-1"
             class="w-10 h-2 mt-2"
             style="background-color: #ee9b00;"
         >
@@ -120,57 +124,23 @@ const toggleNumbers = function () {
            :class="(codeLength > 4) ? 'sm:ml-2' : 'ml-2'">
         <button
             class="w-10 h-10 flex items-center justify-around font-bold bg-green-600 text-white rounded-full"
-
             @click="checkAttempt">
         </button>
       </div>
     </div>
   </div>
 
-  <div v-for="a in attempts" class="flex max-w-screen-sm mx-auto justify-around items-center mb-5">
-    <div class="flex w-full mx-auto sm:justify-center justify-between"
-
-    >
-      <div v-for="n in a.attempt"
-           :class="['g-' + n, (codeLength > 4) ? 'sm:mx-2' : 'mx-2']"
-           class="w-10 h-10 flex items-center justify-center font-bold">
-        <span v-if="showNumbers">{{ n }}</span>
-      </div>
-      <div class="w-20 h-10 flex justify-center"
-           :class="(codeLength > 4) ? 'sm:ml-2' : 'ml-2'"
-      >
-        <div class="flex items-end text-right"
-             :class="(codeLength > 4) ? 'sm:mx-2' : 'mx-2'"
-        >
-          <div class="flex flex-col">
-            <div :class="'r-' + a.result[0]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
-            <div :class="'r-' + a.result[1]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
-          </div>
-
-          <div class="flex flex-col">
-            <div :class="'r-' + a.result[2]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
-            <div :class="'r-' + a.result[3]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
-          </div>
-        </div>
-        <div v-if="a.result.length > 4"
-             class="flex items-end text-right">
-          <div class="flex flex-col">
-            <div :class="'r-' + a.result[4]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
-            <div :class="'r-' + a.result[5]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
-          </div>
-
-          <div v-if="a.result.length > 6"
-               class="flex flex-col">
-            <div :class="'r-' + a.result[6]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
-            <div :class="'r-' + a.result[7]" class="w-5 h-5 border-1 border-gray-300 text-center">&nbsp;</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <ResultLine
+      v-for="(a, i) in attempts"
+      :key="i"
+      :attempt="a"
+      :codeLength="codeLength"
+      :showNumbers="showNumbers"
+  />
 
 </template>
-<style scoped>
+
+<style>
 
 .g-10 {
   background-color: #d5d2ca;
@@ -228,7 +198,7 @@ const toggleNumbers = function () {
 }
 
 .r-1 {
-  background-color: #0a9396;
+  background-color: #94d2bd;
 }
 
 .r-0 {
