@@ -1,3 +1,4 @@
+
 <script lang="ts" setup>
 import { ref } from "vue"
 import axios from "axios"
@@ -9,10 +10,10 @@ const router = useRouter()
 const route = useRoute()
 
 let codeLength = 4
-let showNumbers: any = ref(false)
-const attempts: any = ref([])
-const newAttempt: any = ref([])
-const curCol: any = ref(0)
+let showNumbers = ref<boolean>(false)
+const attempts = ref<Array<Array<number>>>([])
+const newAttempt = ref<Array<number>>([])
+const curCol = ref<number>(0)
 
 switch (route.params.level) {
   case '2':
@@ -25,13 +26,12 @@ switch (route.params.level) {
     codeLength = 4
 }
 
-let i: number
-for (i = 0; i < codeLength; i++) {
+for (let i = 0; i < codeLength; i++) {
   newAttempt.value[i] = 10
 }
 
 const checkAttempt = function () {
-  for (i = 0; i < codeLength; i++) {
+  for (let i = 0; i < codeLength; i++) {
     if (newAttempt.value[i] == 10) {
       return
     }
@@ -58,8 +58,7 @@ const checkAttempt = function () {
       })
     }
 
-    let i: number
-    for (i = 0; i < newAttempt.value.length; i++) {
+    for (let i = 0; i < newAttempt.value.length; i++) {
       newAttempt.value[i] = 10
     }
     curCol.value = 0
