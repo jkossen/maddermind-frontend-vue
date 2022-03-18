@@ -9,9 +9,15 @@ import ResultLine from "./ResultLine.vue";
 const router = useRouter()
 const route = useRoute()
 
-let codeLength = 4
-let showNumbers = ref<boolean>(false)
-const attempts = ref<Array<Array<number>>>([])
+ type AttemptInterface = {
+     attempt: number[]
+     result: number[]
+ }
+
+ 
+ let codeLength = 4
+ let showNumbers = ref<boolean>(false)
+ const attempts = ref<AttemptInterface[]>([])
 const newAttempt = ref<Array<number>>([])
 const curCol = ref<number>(0)
 
