@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-defineProps({
-  num: Number,
-  codeLength: Number,
-  showNumbers: Boolean
-})
+defineProps<{
+  num: number,
+  codeLength: number,
+  showNumbers: boolean
+}>()
 </script>
 
 <template>
