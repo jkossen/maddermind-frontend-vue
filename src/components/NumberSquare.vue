@@ -3,7 +3,7 @@
      num: number,
      codeLength: number,
      showNumbers: boolean,
-     cursor: string
+     cursor?: string
  }>()
 
  let curs = ''
