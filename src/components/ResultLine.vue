@@ -1,11 +1,7 @@
 <script lang="ts" setup>
  import ResultIndicator from "./ResultIndicator.vue"
  import NumberSquare from "./NumberSquare.vue";
-
- type AttemptInterface = {
-     attempt: number[]
-     result: number[]
- }
+ import { AttemptInterface } from "../types";
  
  defineProps<{
      attempt: AttemptInterface,

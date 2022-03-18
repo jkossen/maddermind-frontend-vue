@@ -4,15 +4,10 @@
  import { useRoute, useRouter } from 'vue-router'
  import NumberSquare from "./NumberSquare.vue";
  import ResultLine from "./ResultLine.vue";
-
+ import { AttemptInterface } from "../types";
+ 
  const router = useRouter()
  const route = useRoute()
-
- type AttemptInterface = {
-     attempt: number[]
-     result: number[]
- }
-
  
  let codeLength = 4
  let showNumbers = ref<boolean>(false)
