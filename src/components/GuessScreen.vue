@@ -94,6 +94,7 @@
 	    :codeLength="codeLength"
 	    :class="'g-' + (i - 1)"
 	    :showNumbers="showNumbers"
+	    cursor="pointer"
 	    @click="pickColor(i - 1)"
 	/>
     </div>
