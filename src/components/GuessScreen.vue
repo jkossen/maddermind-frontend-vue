@@ -9,22 +9,13 @@
  const router = useRouter()
  const route = useRoute()
  
- let codeLength = 4
- let showNumbers = ref<boolean>(false)
+ const showNumbers = ref<boolean>(false)
  const attempts = ref<AttemptInterface[]>([])
  const newAttempt = ref<Array<number>>([])
  const curCol = ref<number>(0)
-
- switch (route.params.level) {
-     case '2':
-	 codeLength = 6
-	 break
-     case '3':
-	 codeLength = 8
-	 break
-     default:
-	 codeLength = 4
- }
+ const lev = route.params.level
+ const level = parseInt((typeof lev !== "string") ? lev[0] : lev)
+ const codeLength = 2 + (level * 2)
 
  for (let i = 0; i < codeLength; i++) {
      newAttempt.value[i] = 10
